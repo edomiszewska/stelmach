@@ -1,1 +1,17 @@
 5. select klienci.imie_klienta, klienci.nazwisko_klienta from klienci join wypozyczenia on wypozyczenia.id_klienta=klienci.id_klienta where wypozyczenia.id_wypozyczenia IN (SELECT count(wypozyczenia.id_wypozyczenia) from wypozyczenia) order by count(wypozyczenia.id_wypozyczenia) desc limit 1;
+
+select klienci.imie_klienta, klienci.nazwisko_klienta from klienci
+join wypozyczenia on wypozyczenia.id_klienta=klienci.id_klienta
+where wypozyczenia.id_klienta
+IN (SELECT count(wypozyczenia.id_wypozyczenia) from wypozyczenia 
+GROUP by wypozyczenia.id_wypozyczenia 
+order by count(wypozyczenia.id_wypozyczenia) desc) limit 1;
+
+
+DZIALA:
+
+select klienci.imie_klienta, klienci.nazwisko_klienta, count(wypozyczenia.id_klienta) 
+from klienci
+join wypozyczenia on wypozyczenia.id_klienta=klienci.id_klienta
+group by klienci.imie_klienta, klienci.nazwisko_klienta 
+order by count(wypozyczenia.id_klienta) desc limit 1;
