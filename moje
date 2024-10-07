@@ -1,0 +1,1 @@
+5. select klienci.imie_klienta, klienci.nazwisko_klienta from klienci join wypozyczenia on wypozyczenia.id_klienta=klienci.id_klienta where wypozyczenia.id_wypozyczenia IN (SELECT count(wypozyczenia.id_wypozyczenia) from wypozyczenia) order by count(wypozyczenia.id_wypozyczenia) desc limit 1;
