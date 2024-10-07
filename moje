@@ -15,3 +15,27 @@ from klienci
 join wypozyczenia on wypozyczenia.id_klienta=klienci.id_klienta
 group by klienci.imie_klienta, klienci.nazwisko_klienta 
 order by count(wypozyczenia.id_klienta) desc limit 1;
+
+
+6. 
+select klienci.imie_klienta, klienci.nazwisko_klienta from klienci
+join wypozyczenia on wypozyczenia.id_klienta=klienci.id_klienta
+join dane_wypozyczen on dane_wypozyczen.id_wypozyczenia=wypozyczenia.id_wypozyczenia
+join samochody on samochody.id_samochodu=dane_wypozyczen.id_samochodu
+join klasy_samochodow on klasy_samochodow.id_klasy=samochody.id_klasy
+where klasy_samochodow.nazwa_klasy not like "%sedan%";
+
+7.
+SELECT
+    samochody.marka,
+    samochody.model,
+    samochody.id_samochodu,
+    samochody.nr_rejestracyjny,
+    IF(
+        wypozyczenia.data_wyp BETWEEN "2022-12-21" and "2022-12-31", "byl wypozyczony", "nie byl wypozyczony"
+    )
+FROM
+    samochody
+    join dane_wypozyczen on dane_wypozyczen.id_samochodu=samochody.id_samochodu
+    JOIN wypozyczenia ON dane_wypozyczen.id_wypozyczenia = wypozyczenia.id_wypozyczenia
+    group by  samochody.marka, samochody.model,samochody.id_samochodu, samochody.nr_rejestracyjny;
